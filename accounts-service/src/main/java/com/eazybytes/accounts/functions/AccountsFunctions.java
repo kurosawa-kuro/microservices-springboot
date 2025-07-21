@@ -1,6 +1,6 @@
-package com.eazybytes.accounts.functions;
+package com.kurobytes.accounts.functions;
 
-import com.eazybytes.accounts.service.IAccountsService;
+import com.kurobytes.accounts.service.IAccountsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;

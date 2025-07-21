@@ -1,4 +1,4 @@
-package com.eazybytes.message.dto;
+package com.kurobytes.message.dto;
 
 /**
  * @param accountNumber

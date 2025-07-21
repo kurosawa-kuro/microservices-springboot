@@ -2,18 +2,18 @@
 
 ## Overview
 
-This document describes the migration of the EazyBank microservices from Spring Cloud to Kubernetes OSS native solutions. The migration removes Spring Cloud dependencies and replaces them with Kubernetes-native alternatives.
+This document describes the migration of the KuroBank microservices from Spring Cloud to Kubernetes OSS native solutions. The migration removes Spring Cloud dependencies and replaces them with Kubernetes-native alternatives.
 
 ## Changes Made
 
 ### 1. Spring Boot Version Update
-- Updated Spring Boot from 3.2.x to 3.4.x in `src/eazy-bom/pom.xml`
+- Updated Spring Boot from 3.2.x to 3.4.x in `src/kuro-bom/pom.xml`
 - Removed Spring Cloud BOM dependency
 
 ### 2. Database Migration to SQLite
 - **Replaced H2 with SQLite** for all microservices (accounts, cards, loans)
 - Added `sqlite-jdbc:3.46.0.0` dependency to BOM
-- Created custom `SQLiteDialect` class in `src/eazy-bom/common/src/main/java/com/eazybytes/common/dialect/SQLiteDialect.java`
+- Created custom `SQLiteDialect` class in `src/kuro-bom/common/src/main/java/com/kurobytes/common/dialect/SQLiteDialect.java`
 - Updated JDBC URLs from `jdbc:h2:mem:testdb` to `jdbc:sqlite:/data/app.db`
 - Added `VOLUME /data` to Dockerfiles for SQLite persistence
 
@@ -97,7 +97,7 @@ spring:
     username: ''
     password: ''
   jpa:
-    database-platform: com.eazybytes.common.dialect.SQLiteDialect
+    database-platform: com.kurobytes.common.dialect.SQLiteDialect
 ```
 
 ### Custom SQLite Dialect

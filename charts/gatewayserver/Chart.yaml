@@ -1,6 +1,6 @@
 apiVersion: v2
 name: gatewayserver-service
-description: A Helm chart for EazyBank Gateway Server microservice
+description: A Helm chart for KuroBank Gateway Server microservice
 type: application
 version: 0.1.0
 appVersion: "1.0.0"

@@ -1,4 +1,4 @@
-package com.eazybytes.gatewayserver.config;
+package com.kurobytes.gatewayserver.config;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.GrantedAuthority;

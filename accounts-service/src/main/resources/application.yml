@@ -11,7 +11,7 @@ spring:
     username: ''
     password: ''
   jpa:
-    database-platform: com.eazybytes.common.dialect.SQLiteDialect
+    database-platform: com.kurobytes.common.dialect.SQLiteDialect
     hibernate:
       ddl-auto: update
     show-sql: false # SECURITY: Disable SQL logging in production
@@ -42,13 +42,13 @@ management:
 info:
   app:
     name: "accounts"
-    description: "Eazy Bank Accounts Application"
+    description: "Kuro Bank Accounts Application"
     version: "1.0.0"
 
 logging:
   level:
     com:
-      eazybytes:
+      kurobytes:
         accounts: DEBUG
   pattern:
     level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"

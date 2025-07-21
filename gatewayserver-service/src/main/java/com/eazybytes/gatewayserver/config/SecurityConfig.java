@@ -1,4 +1,4 @@
-package com.eazybytes.gatewayserver.config;
+package com.kurobytes.gatewayserver.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

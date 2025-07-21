@@ -41,13 +41,13 @@ management:
 info:
   app:
     name: "gatewayserver"
-    description: "Eazy Bank Gateway Server Application"
+    description: "Kuro Bank Gateway Server Application"
     version: "1.0.0"
 
 logging:
   level:
     com:
-      eazybytes:
+      kurobytes:
         gatewayserver: DEBUG
   pattern:
     level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"

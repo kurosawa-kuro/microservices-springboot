@@ -1,6 +1,6 @@
-# eazybytes/microservices — Kubernetes OSS Adaptation Guide (SQLite Edition)
+# kurobytes/microservices — Kubernetes OSS Adaptation Guide (SQLite Edition)
 
-> **Scope** – This guide explains how to migrate the Udemy sample repository **eazybytes/microservices** from Spring Cloud–centric architecture to a **Kubernetes‑native, OSS‑only stack**, while switching each service’s datastore to **SQLite**.
+> **Scope** – This guide explains how to migrate the Udemy sample repository **kurobytes/microservices** from Spring Cloud–centric architecture to a **Kubernetes‑native, OSS‑only stack**, while switching each service’s datastore to **SQLite**.
 > Target runtime is **EKS** (production) & **kind** (local).  All manifests are Helm‑templated and deployed via **Argo CD**.
 
 ---

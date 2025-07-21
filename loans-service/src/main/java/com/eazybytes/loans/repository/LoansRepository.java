@@ -1,6 +1,6 @@
-package com.eazybytes.loans.repository;
+package com.kurobytes.loans.repository;
 
-import com.eazybytes.loans.entity.Loans;
+import com.kurobytes.loans.entity.Loans;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

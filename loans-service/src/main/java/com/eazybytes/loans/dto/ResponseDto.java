@@ -1,4 +1,4 @@
-package com.eazybytes.loans.dto;
+package com.kurobytes.loans.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

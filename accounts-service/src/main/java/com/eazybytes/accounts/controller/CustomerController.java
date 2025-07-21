@@ -1,8 +1,8 @@
-package com.eazybytes.accounts.controller;
+package com.kurobytes.accounts.controller;
 
-import com.eazybytes.accounts.dto.CustomerDetailsDto;
-import com.eazybytes.accounts.service.ICustomersService;
-import com.eazybytes.common.dto.ErrorResponseDto;
+import com.kurobytes.accounts.dto.CustomerDetailsDto;
+import com.kurobytes.accounts.service.ICustomersService;
+import com.kurobytes.common.dto.ErrorResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,8 +19,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(
-        name = "REST API for Customers in EazyBank",
-        description = "REST APIs in EazyBank to FETCH customer details"
+        name = "REST API for Customers in KuroBank",
+        description = "REST APIs in KuroBank to FETCH customer details"
 )
 @RestController
 @RequestMapping(path="/api", produces = {MediaType.APPLICATION_JSON_VALUE})

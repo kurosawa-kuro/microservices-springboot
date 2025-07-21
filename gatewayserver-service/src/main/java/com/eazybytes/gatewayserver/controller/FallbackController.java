@@ -1,4 +1,4 @@
-package com.eazybytes.gatewayserver.controller;
+package com.kurobytes.gatewayserver.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

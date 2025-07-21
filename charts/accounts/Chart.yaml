@@ -1,6 +1,6 @@
 apiVersion: v2
 name: accounts-service
-description: A Helm chart for EazyBank Accounts Service
+description: A Helm chart for KuroBank Accounts Service
 type: application
 version: 0.1.0
 appVersion: "1.0.0"

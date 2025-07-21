@@ -1,6 +1,6 @@
 FROM openjdk:17-jdk-slim
 
-LABEL maintainer="eazybytes.com"
+LABEL maintainer="kurobytes.com"
 
 COPY target/cards-*.jar cards.jar
 

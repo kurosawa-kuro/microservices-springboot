@@ -11,7 +11,7 @@ spring:
     username: ''
     password: ''
   jpa:
-    database-platform: com.eazybytes.common.dialect.SQLiteDialect
+    database-platform: com.kurobytes.common.dialect.SQLiteDialect
 
 ---
 spring:
@@ -60,13 +60,13 @@ management:
 info:
   app:
     name: "loans"
-    description: "Eazy Bank Loans Application"
+    description: "Kuro Bank Loans Application"
     version: "1.0.0"
 
 logging:
   level:
     com:
-      eazybytes:
+      kurobytes:
         loans: DEBUG
   pattern:
     level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"

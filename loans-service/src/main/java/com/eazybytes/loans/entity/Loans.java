@@ -1,4 +1,4 @@
-package com.eazybytes.loans.entity;
+package com.kurobytes.loans.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

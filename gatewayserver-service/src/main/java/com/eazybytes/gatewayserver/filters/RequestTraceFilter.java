@@ -1,4 +1,4 @@
-package com.eazybytes.gatewayserver.filters;
+package com.kurobytes.gatewayserver.filters;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +24,12 @@ public class RequestTraceFilter implements GlobalFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
         if (isCorrelationIdPresent(requestHeaders)) {
-            logger.debug("eazyBank-correlation-id found in RequestTraceFilter : {}",
+            logger.debug("kuroBank-correlation-id found in RequestTraceFilter : {}",
                     filterUtility.getCorrelationId(requestHeaders));
         } else {
             String correlationID = generateCorrelationId();
             exchange = filterUtility.setCorrelationId(exchange, correlationID);
-            logger.debug("eazyBank-correlation-id generated in RequestTraceFilter : {}", correlationID);
+            logger.debug("kuroBank-correlation-id generated in RequestTraceFilter : {}", correlationID);
         }
         return chain.filter(exchange);
     }

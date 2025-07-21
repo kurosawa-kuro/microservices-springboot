@@ -1,4 +1,4 @@
-package com.eazybytes.loans.constants;
+package com.kurobytes.loans.constants;
 
 public final class LoansConstants {
 

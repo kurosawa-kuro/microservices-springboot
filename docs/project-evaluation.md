@@ -2,7 +2,7 @@
 
 ## プロジェクト概要
 
-本プロジェクトは、Spring CloudからKubernetes nativeソリューションに移行されたSpring Bootマイクロサービスアーキテクチャです。EazyBytesのUdemyコース「Master Microservices with Spring Boot, Docker, Kubernetes」をベースとしています。
+本プロジェクトは、Spring CloudからKubernetes nativeソリューションに移行されたSpring Bootマイクロサービスアーキテクチャです。KuroBytesのUdemyコース「Master Microservices with Spring Boot, Docker, Kubernetes」をベースとしています。
 
 ### 技術スタック
 - **Java 21** + **Spring Boot 3.4.1**
@@ -180,7 +180,7 @@ public class CardsFeignClient {
 
 #### 4.2 適切なアノテーション使用
 ```java
-@Tag(name = "CRUD REST APIs for Accounts in EazyBank")
+@Tag(name = "CRUD REST APIs for Accounts in KuroBank")
 @RestController
 @RequestMapping(path="/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Validated

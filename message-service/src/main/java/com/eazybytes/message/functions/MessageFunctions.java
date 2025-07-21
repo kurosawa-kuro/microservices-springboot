@@ -1,6 +1,6 @@
-package com.eazybytes.message.functions;
+package com.kurobytes.message.functions;
 
-import com.eazybytes.message.dto.AccountsMsgDto;
+import com.kurobytes.message.dto.AccountsMsgDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;

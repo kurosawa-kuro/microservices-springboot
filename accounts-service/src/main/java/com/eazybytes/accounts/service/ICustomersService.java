@@ -1,6 +1,6 @@
-package com.eazybytes.accounts.service;
+package com.kurobytes.accounts.service;
 
-import com.eazybytes.accounts.dto.CustomerDetailsDto;
+import com.kurobytes.accounts.dto.CustomerDetailsDto;
 
 public interface ICustomersService {
 

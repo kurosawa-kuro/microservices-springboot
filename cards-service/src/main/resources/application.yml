@@ -11,7 +11,7 @@ spring:
     username: ''
     password: ''
   jpa:
-    database-platform: com.eazybytes.common.dialect.SQLiteDialect
+    database-platform: com.kurobytes.common.dialect.SQLiteDialect
     hibernate:
       ddl-auto: update
     show-sql: true
@@ -43,13 +43,13 @@ management:
 info:
   app:
     name: "cards"
-    description: "Eazy Bank Cards Application"
+    description: "Kuro Bank Cards Application"
     version: "1.0.0"
 
 logging:
   level:
     com:
-      eazybytes:
+      kurobytes:
         cards: DEBUG
   pattern:
     level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"

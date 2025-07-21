@@ -1,6 +1,6 @@
 FROM openjdk:21-jdk-slim
 
-LABEL maintainer="eazybytes.com"
+LABEL maintainer="kurobytes.com"
 
 COPY target/loans-*.jar loans.jar
 

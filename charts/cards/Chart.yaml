@@ -1,6 +1,6 @@
 apiVersion: v2
 name: cards-service
-description: A Helm chart for EazyBank Cards microservice
+description: A Helm chart for KuroBank Cards microservice
 type: application
 version: 0.1.0
 appVersion: "1.0.0"

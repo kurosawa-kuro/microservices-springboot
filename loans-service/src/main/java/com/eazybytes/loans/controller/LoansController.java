@@ -1,11 +1,11 @@
-package com.eazybytes.loans.controller;
+package com.kurobytes.loans.controller;
 
-import com.eazybytes.common.dto.ErrorResponseDto;
-import com.eazybytes.loans.constants.LoansConstants;
-import com.eazybytes.loans.dto.LoansContactInfoDto;
-import com.eazybytes.loans.dto.LoansDto;
-import com.eazybytes.loans.dto.ResponseDto;
-import com.eazybytes.loans.service.ILoansService;
+import com.kurobytes.common.dto.ErrorResponseDto;
+import com.kurobytes.loans.constants.LoansConstants;
+import com.kurobytes.loans.dto.LoansContactInfoDto;
+import com.kurobytes.loans.dto.LoansDto;
+import com.kurobytes.loans.dto.ResponseDto;
+import com.kurobytes.loans.service.ILoansService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,12 +26,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @author Eazy Bytes
+ * @author Kuro Bytes
  */
 
 @Tag(
-        name = "CRUD REST APIs for Loans in EazyBank",
-        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE loan details"
+        name = "CRUD REST APIs for Loans in KuroBank",
+        description = "CRUD REST APIs in KuroBank to CREATE, UPDATE, FETCH AND DELETE loan details"
 )
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -57,7 +57,7 @@ public class LoansController {
 
     @Operation(
             summary = "Create Loan REST API",
-            description = "REST API to create new loan inside EazyBank"
+            description = "REST API to create new loan inside KuroBank"
     )
     @ApiResponses({
             @ApiResponse(

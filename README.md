@@ -2,7 +2,7 @@
 
 A modern microservices architecture built with Spring Boot and Kubernetes-native solutions, migrated from Spring Cloud components.
 
-Based on the Udemy course [Master Microservices with Spring Boot, Docker, Kubernetes](https://www.udemy.com/course/master-microservices-with-spring-docker-kubernetes/?referralCode=9365DB9B7EE637F629A9) by EazyBytes.
+Based on the Udemy course [Master Microservices with Spring Boot, Docker, Kubernetes](https://www.udemy.com/course/master-microservices-with-spring-docker-kubernetes/?referralCode=9365DB9B7EE637F629A9) by KuroBytes.
 
 ---
 
@@ -146,8 +146,8 @@ kubectl scale deployment accounts-deployment --replicas=3
 
 ## Common Module (`common/`)
 
-- **Custom SQLite Dialect**: `common/src/main/java/com/eazybytes/common/dialect/SQLiteDialect.java`
-- **Shared DTOs**: `common/src/main/java/com/eazybytes/common/dto/ErrorResponseDto.java`
+- **Custom SQLite Dialect**: `common/src/main/java/com/kurobytes/common/dialect/SQLiteDialect.java`
+- **Shared DTOs**: `common/src/main/java/com/kurobytes/common/dto/ErrorResponseDto.java`
 - Build `common` first if you encounter dependency errors
 
 ---
@@ -186,7 +186,7 @@ kubectl scale deployment accounts-deployment --replicas=3
 | `docker compose up` | Start all services locally |
 | `docker compose down` | Stop and remove all containers |
 | `docker images` | List Docker images |
-| `docker run -p 8080:8080 eazybytes/accounts:s20` | Run a service container |
+| `docker run -p 8080:8080 kurobytes/accounts:s20` | Run a service container |
 
 ### Kubernetes
 | Command | Description |
@@ -215,5 +215,5 @@ kubectl scale deployment accounts-deployment --replicas=3
 ---
 
 ## Notes
-- This project is based on the EazyBytes Udemy course, but has been significantly modernized for Kubernetes-native operation.
+- This project is based on the KuroBytes Udemy course, but has been significantly modernized for Kubernetes-native operation.
 - For any issues, check the CLAUDE.md for additional troubleshooting and context.

@@ -1,4 +1,4 @@
-package com.eazybytes.accounts.config;
+package com.kurobytes.accounts.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

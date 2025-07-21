@@ -1,4 +1,4 @@
-package com.eazybytes.cards.exception;
+package com.kurobytes.cards.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

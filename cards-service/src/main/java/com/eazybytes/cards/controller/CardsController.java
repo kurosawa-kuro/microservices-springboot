@@ -1,11 +1,11 @@
-package com.eazybytes.cards.controller;
+package com.kurobytes.cards.controller;
 
-import com.eazybytes.cards.constants.CardsConstants;
-import com.eazybytes.cards.dto.CardsContactInfoDto;
-import com.eazybytes.cards.dto.CardsDto;
-import com.eazybytes.cards.dto.ResponseDto;
-import com.eazybytes.cards.service.ICardsService;
-import com.eazybytes.common.dto.ErrorResponseDto;
+import com.kurobytes.cards.constants.CardsConstants;
+import com.kurobytes.cards.dto.CardsContactInfoDto;
+import com.kurobytes.cards.dto.CardsDto;
+import com.kurobytes.cards.dto.ResponseDto;
+import com.kurobytes.cards.service.ICardsService;
+import com.kurobytes.common.dto.ErrorResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,12 +26,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @author Eazy Bytes
+ * @author Kuro Bytes
  */
 
 @Tag(
-        name = "CRUD REST APIs for Cards in EazyBank",
-        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE card details"
+        name = "CRUD REST APIs for Cards in KuroBank",
+        description = "CRUD REST APIs in KuroBank to CREATE, UPDATE, FETCH AND DELETE card details"
 )
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -57,7 +57,7 @@ public class CardsController {
 
     @Operation(
             summary = "Create Card REST API",
-            description = "REST API to create new Card inside EazyBank"
+            description = "REST API to create new Card inside KuroBank"
     )
     @ApiResponses({
             @ApiResponse(

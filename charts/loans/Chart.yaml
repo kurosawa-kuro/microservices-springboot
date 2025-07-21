@@ -1,6 +1,6 @@
 apiVersion: v2
 name: loans-service
-description: A Helm chart for EazyBank Loans microservice
+description: A Helm chart for KuroBank Loans microservice
 type: application
 version: 0.1.0
 appVersion: "1.0.0"

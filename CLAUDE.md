@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Spring Boot microservices project that has been migrated from Spring Cloud to Kubernetes-native solutions. It's based on the Udemy course "Master Microservices with Spring Boot, Docker, Kubernetes" by EazyBytes.
+This is a Spring Boot microservices project that has been migrated from Spring Cloud to Kubernetes-native solutions. It's based on the Udemy course "Master Microservices with Spring Boot, Docker, Kubernetes" by KuroBytes.
 
 ### Key Migration Context
 The project recently underwent a major migration (see commit history):
@@ -38,7 +38,7 @@ mvn clean install -Dmaven.test.skip=true
 docker compose up
 
 # Run specific service
-docker run -p 8080:8080 eazybytes/accounts:s20
+docker run -p 8080:8080 kurobytes/accounts:s20
 ```
 
 ### Testing
@@ -116,10 +116,10 @@ Each service exposes:
 - Persistent Volume Claims in Kubernetes
 
 ### Docker Image Naming
-Images follow pattern: `eazybytes/{service-name}:s20`
-- accounts → eazybytes/accounts:s20
-- cards → eazybytes/cards:s20
-- loans → eazybytes/loans:s20
+Images follow pattern: `kurobytes/{service-name}:s20`
+- accounts → kurobytes/accounts:s20
+- cards → kurobytes/cards:s20
+- loans → kurobytes/loans:s20
 
 ## Development Tips
 

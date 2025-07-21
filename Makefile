@@ -3,7 +3,7 @@
 
 # Variables
 SERVICES = accounts-service cards-service loans-service message-service
-DOCKER_REGISTRY = eazybytes
+DOCKER_REGISTRY = kurobytes
 IMAGE_TAG = s20
 MAVEN = ./mvnw
 KUBECTL = kubectl

@@ -1,6 +1,6 @@
 apiVersion: v2
 name: message-service
-description: A Helm chart for EazyBank Message microservice
+description: A Helm chart for KuroBank Message microservice
 type: application
 version: 0.1.0
 appVersion: "1.0.0"

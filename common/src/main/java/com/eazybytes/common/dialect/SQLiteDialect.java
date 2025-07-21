@@ -1,4 +1,4 @@
-package com.eazybytes.common.dialect;
+package com.kurobytes.common.dialect;
 
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.function.StandardSQLFunction;

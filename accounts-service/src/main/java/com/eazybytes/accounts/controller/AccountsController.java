@@ -1,11 +1,11 @@
-package com.eazybytes.accounts.controller;
+package com.kurobytes.accounts.controller;
 
-import com.eazybytes.accounts.constants.AccountsConstants;
-import com.eazybytes.accounts.dto.AccountsContactInfoDto;
-import com.eazybytes.accounts.dto.CustomerDto;
-import com.eazybytes.accounts.dto.ResponseDto;
-import com.eazybytes.accounts.service.IAccountsService;
-import com.eazybytes.common.dto.ErrorResponseDto;
+import com.kurobytes.accounts.constants.AccountsConstants;
+import com.kurobytes.accounts.dto.AccountsContactInfoDto;
+import com.kurobytes.accounts.dto.CustomerDto;
+import com.kurobytes.accounts.dto.ResponseDto;
+import com.kurobytes.accounts.service.IAccountsService;
+import com.kurobytes.common.dto.ErrorResponseDto;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,12 +28,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @author Eazy Bytes
+ * @author Kuro Bytes
  */
 
 @Tag(
-        name = "CRUD REST APIs for Accounts in EazyBank",
-        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE account details"
+        name = "CRUD REST APIs for Accounts in KuroBank",
+        description = "CRUD REST APIs in KuroBank to CREATE, UPDATE, FETCH AND DELETE account details"
 )
 @RestController
 @RequestMapping(path="/api", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -59,7 +59,7 @@ public class AccountsController {
 
     @Operation(
             summary = "Create Account REST API",
-            description = "REST API to create new Customer &  Account inside EazyBank"
+            description = "REST API to create new Customer &  Account inside KuroBank"
     )
     @ApiResponses({
             @ApiResponse(
