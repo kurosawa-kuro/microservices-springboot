@@ -28,7 +28,7 @@ services:
       dockerfile: Dockerfile
     container_name: loans-service
     ports:
-      - "9020:9020"
+      - "8090:8090"
     environment:
       - SPRING_PROFILES_ACTIVE=dev
     depends_on:
