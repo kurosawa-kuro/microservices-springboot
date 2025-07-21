@@ -14,12 +14,12 @@ spring:
     database-platform: com.eazybytes.common.dialect.SQLiteDialect
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false # SECURITY: Disable SQL logging in production
 management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: ["health", "info", "metrics"] # SECURITY: Only expose safe endpoints
   health:
     readiness-state:
       enabled: true
@@ -27,7 +27,7 @@ management:
       enabled: true
   endpoint:
     shutdown:
-      access: unrestricted
+      enabled: false # SECURITY: Disable shutdown endpoint
     health:
       probes:
         enabled: true
