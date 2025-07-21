@@ -1,0 +1,55 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: "loans"
+  profiles:
+    active: "prod"
+  datasource:
+    url: jdbc:sqlite:/data/app.db
+    driverClassName: org.sqlite.JDBC
+    username: ''
+    password: ''
+  jpa:
+    database-platform: com.eazybytes.common.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    shutdown:
+      access: unrestricted
+    health:
+      probes:
+        enabled: true
+  info:
+    env:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+
+info:
+  app:
+    name: "loans"
+    description: "Eazy Bank Loans Application"
+    version: "1.0.0"
+
+logging:
+  level:
+    com:
+      eazybytes:
+        loans: DEBUG
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"

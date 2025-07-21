@@ -1,0 +1,24 @@
+gateway:
+  name: kurobank-gateway
+  gatewayClassName: envoy-gateway
+  listeners:
+    - name: http
+      port: 80
+      protocol: HTTP
+
+routes:
+  accounts:
+    enabled: true
+    path: /kurobank/accounts
+    service: accounts
+    port: 8080
+  cards:
+    enabled: true
+    path: /kurobank/cards
+    service: cards
+    port: 9000
+  loans:
+    enabled: true
+    path: /kurobank/loans
+    service: loans
+    port: 8090

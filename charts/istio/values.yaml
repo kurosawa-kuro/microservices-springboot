@@ -1,0 +1,20 @@
+virtualService:
+  enabled: true
+  name: kurobank-vs
+  gateway: kurobank-gateway
+  hosts:
+    - kurobank.local
+
+destinationRule:
+  enabled: true
+  circuitBreaker:
+    consecutiveErrors: 3
+    interval: 30s
+    baseEjectionTime: 30s
+    maxEjectionPercent: 50
+
+trafficPolicy:
+  retries:
+    attempts: 3
+    perTryTimeout: 2s
+  timeout: 10s

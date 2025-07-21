@@ -1,0 +1,73 @@
+version: '3.8'
+services:
+  accounts-service:
+    build:
+      context: ./accounts-service
+      dockerfile: Dockerfile
+    container_name: accounts-service
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    depends_on:
+      - postgres
+  cards-service:
+    build:
+      context: ./cards-service
+      dockerfile: Dockerfile
+    container_name: cards-service
+    ports:
+      - "9000:9000"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    depends_on:
+      - postgres
+  loans-service:
+    build:
+      context: ./loans-service
+      dockerfile: Dockerfile
+    container_name: loans-service
+    ports:
+      - "9020:9020"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    depends_on:
+      - postgres
+  message-service:
+    build:
+      context: ./message-service
+      dockerfile: Dockerfile
+    container_name: message-service
+    ports:
+      - "9010:9010"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    depends_on:
+      - postgres
+  gatewayserver-service:
+    build:
+      context: ./gatewayserver-service
+      dockerfile: Dockerfile
+    container_name: gatewayserver-service
+    ports:
+      - "8072:8072"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    depends_on:
+      - accounts-service
+      - cards-service
+      - loans-service
+      - message-service
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: microservices
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata: 

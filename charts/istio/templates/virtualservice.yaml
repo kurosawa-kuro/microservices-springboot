@@ -1,0 +1,53 @@
+{{- if .Values.virtualService.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ .Values.virtualService.name }}
+  labels:
+    app.kubernetes.io/name: {{ include "istio.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  hosts:
+  {{- range .Values.virtualService.hosts }}
+  - {{ . }}
+  {{- end }}
+  gateways:
+  - {{ .Values.virtualService.gateway }}
+  http:
+  - match:
+    - uri:
+        prefix: /kurobank/accounts-service
+    route:
+    - destination:
+        host: accounts
+        port:
+          number: 8080
+    retries:
+      attempts: {{ .Values.trafficPolicy.retries.attempts }}
+      perTryTimeout: {{ .Values.trafficPolicy.retries.perTryTimeout }}
+    timeout: {{ .Values.trafficPolicy.timeout }}
+  - match:
+    - uri:
+        prefix: /kurobank/cards-service
+    route:
+    - destination:
+        host: cards
+        port:
+          number: 9000
+    retries:
+      attempts: {{ .Values.trafficPolicy.retries.attempts }}
+      perTryTimeout: {{ .Values.trafficPolicy.retries.perTryTimeout }}
+    timeout: {{ .Values.trafficPolicy.timeout }}
+  - match:
+    - uri:
+        prefix: /kurobank/loans-service
+    route:
+    - destination:
+        host: loans
+        port:
+          number: 8090
+    retries:
+      attempts: {{ .Values.trafficPolicy.retries.attempts }}
+      perTryTimeout: {{ .Values.trafficPolicy.retries.perTryTimeout }}
+    timeout: {{ .Values.trafficPolicy.timeout }}
+{{- end }}

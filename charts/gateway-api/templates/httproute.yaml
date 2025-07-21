@@ -1,0 +1,62 @@
+{{- if .Values.routes.accounts.enabled }}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: accounts-route
+  labels:
+    app.kubernetes.io/name: {{ include "gateway-api.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  parentRefs:
+  - name: {{ .Values.gateway.name }}
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: {{ .Values.routes.accounts.path }}
+    backendRefs:
+    - name: {{ .Values.routes.accounts.service }}
+      port: {{ .Values.routes.accounts.port }}
+---
+{{- end }}
+{{- if .Values.routes.cards.enabled }}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: cards-route
+  labels:
+    app.kubernetes.io/name: {{ include "gateway-api.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  parentRefs:
+  - name: {{ .Values.gateway.name }}
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: {{ .Values.routes.cards.path }}
+    backendRefs:
+    - name: {{ .Values.routes.cards.service }}
+      port: {{ .Values.routes.cards.port }}
+---
+{{- end }}
+{{- if .Values.routes.loans.enabled }}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: loans-route
+  labels:
+    app.kubernetes.io/name: {{ include "gateway-api.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  parentRefs:
+  - name: {{ .Values.gateway.name }}
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: {{ .Values.routes.loans.path }}
+    backendRefs:
+    - name: {{ .Values.routes.loans.service }}
+      port: {{ .Values.routes.loans.port }}
+{{- end }}

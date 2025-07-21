@@ -1,0 +1,19 @@
+secretStore:
+  name: kurobank-secret-store
+  provider: kubernetes
+  auth:
+    secretRef:
+      secretAccessKey:
+        name: secret-store-credentials
+        key: access-key
+
+externalSecrets:
+  database:
+    enabled: true
+    name: database-secrets
+    refreshInterval: 1h
+    data:
+      - secretKey: db-password
+        remoteRef:
+          key: database
+          property: password

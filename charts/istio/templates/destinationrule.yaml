@@ -1,0 +1,17 @@
+{{- if .Values.destinationRule.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: kurobank-services
+  labels:
+    app.kubernetes.io/name: {{ include "istio.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  host: "*.default.svc.cluster.local"
+  trafficPolicy:
+    outlierDetection:
+      consecutiveErrors: {{ .Values.destinationRule.circuitBreaker.consecutiveErrors }}
+      interval: {{ .Values.destinationRule.circuitBreaker.interval }}
+      baseEjectionTime: {{ .Values.destinationRule.circuitBreaker.baseEjectionTime }}
+      maxEjectionPercent: {{ .Values.destinationRule.circuitBreaker.maxEjectionPercent }}
+{{- end }}
