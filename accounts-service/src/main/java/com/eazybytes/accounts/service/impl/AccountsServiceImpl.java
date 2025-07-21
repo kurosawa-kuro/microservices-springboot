@@ -18,6 +18,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.dao.DataIntegrityViolationException;
+import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -25,6 +32,8 @@ import java.util.Random;
 
 @Service
 @AllArgsConstructor
+@Timed(value = "business.operations") // Micrometerメトリクス
+@Transactional(readOnly = true) // デフォルトは読み取り専用
 public class AccountsServiceImpl  implements IAccountsService {
 
     private static final Logger log = LoggerFactory.getLogger(AccountsServiceImpl.class);
@@ -32,24 +41,57 @@ public class AccountsServiceImpl  implements IAccountsService {
     private AccountsRepository accountsRepository;
     private CustomerRepository customerRepository;
     private final StreamBridge streamBridge;
+    private final MeterRegistry meterRegistry;
+    private final Counter accountCreationCounter;
+
+    public AccountsServiceImpl(AccountsRepository accountsRepository,
+                               CustomerRepository customerRepository,
+                               StreamBridge streamBridge,
+                               MeterRegistry meterRegistry) {
+        this.accountsRepository = accountsRepository;
+        this.customerRepository = customerRepository;
+        this.streamBridge = streamBridge;
+        this.meterRegistry = meterRegistry;
+        this.accountCreationCounter = Counter.builder("accounts.created")
+            .description("Number of accounts created")
+            .register(meterRegistry);
+    }
 
     /**
      * @param customerDto - CustomerDto Object
      */
     @Override
+    @Transactional // 書き込み操作のみ明示的にTransactional
     public void createAccount(CustomerDto customerDto) {
-        Customer customer = CustomerMapper.mapToCustomer(customerDto, new Customer());
-        Optional<Customer> optionalCustomer = customerRepository.findByMobileNumber(customerDto.getMobileNumber());
-        if(optionalCustomer.isPresent()) {
-            throw new CustomerAlreadyExistsException("Customer already registered with given mobileNumber "
-                    +customerDto.getMobileNumber());
+        Timer.Sample sample = Timer.start(meterRegistry);
+        try {
+            Customer customer = CustomerMapper.mapToCustomer(customerDto, new Customer());
+            Optional<Customer> optionalCustomer = customerRepository.findByMobileNumber(customerDto.getMobileNumber());
+            if(optionalCustomer.isPresent()) {
+                throw new CustomerAlreadyExistsException("Customer already registered with given mobileNumber "
+                        +customerDto.getMobileNumber());
+            }
+            Customer savedCustomer = customerRepository.save(customer);
+            Accounts savedAccount = accountsRepository.save(createNewAccount(savedCustomer));
+            // 非同期通知（トランザクション外）
+            sendCommunicationAsync(savedAccount, savedCustomer);
+            // メトリクス記録
+            accountCreationCounter.increment();
+            meterRegistry.gauge("accounts.total.count", accountsRepository.count());
+        } catch (DataIntegrityViolationException e) {
+            meterRegistry.counter("accounts.creation.errors", "error.type", e.getClass().getSimpleName())
+                .increment();
+            log.error("Data integrity violation during account creation", e);
+            throw new RuntimeException("Account creation failed due to data constraint", e);
+        } finally {
+            sample.stop(Timer.builder("accounts.creation.duration")
+                .description("Account creation duration")
+                .register(meterRegistry));
         }
-        Customer savedCustomer = customerRepository.save(customer);
-        Accounts savedAccount = accountsRepository.save(createNewAccount(savedCustomer));
-        sendCommunication(savedAccount, savedCustomer);
     }
 
-    private void sendCommunication(Accounts account, Customer customer) {
+    @Async
+    public void sendCommunicationAsync(Accounts account, Customer customer) {
         var accountsMsgDto = new AccountsMsgDto(account.getAccountNumber(), customer.getName(),
                 customer.getEmail(), customer.getMobileNumber());
         log.info("Sending Communication request for the details: {}", accountsMsgDto);
@@ -77,6 +119,7 @@ public class AccountsServiceImpl  implements IAccountsService {
      * @return Accounts Details based on a given mobileNumber
      */
     @Override
+    @Transactional(readOnly = true, timeout = 5) // 読み取り専用 + タイムアウト
     public CustomerDto fetchAccount(String mobileNumber) {
         Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
                 () -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber)

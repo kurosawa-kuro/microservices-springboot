@@ -14,6 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import org.springframework.scheduling.annotation.Async;
+import java.util.concurrent.CompletableFuture;
+import org.springframework.web.client.ResourceAccessException;
 
 @Component
 public class CardsRestClient {
@@ -53,4 +58,22 @@ public class CardsRestClient {
         }
     }
 
+    @Async("taskExecutor")
+    @Retry(name = "cards-service", maxAttempts = 3)
+    @CircuitBreaker(name = "cards-service", fallbackMethod = "getDefaultCardsData")
+    public CompletableFuture<CardsDto> fetchCardDetailsAsync(String correlationId, String mobileNumber) {
+        try {
+            ResponseEntity<CardsDto> response = fetchCardDetails(correlationId, mobileNumber);
+            return CompletableFuture.completedFuture(response.getBody());
+        } catch (Exception e) {
+            log.warn("Failed to fetch cards for mobile: {}", mobileNumber, e);
+            return CompletableFuture.completedFuture(null);
+        }
+    }
+
+    public CompletableFuture<CardsDto> getDefaultCardsData(String correlationId, String mobileNumber, Throwable ex) {
+        log.warn("Circuit breaker activated for cards service: {}", ex.getMessage());
+        CardsDto defaultCards = new CardsDto(); // 必要に応じてデフォルト値をセット
+        return CompletableFuture.completedFuture(defaultCards);
+    }
 }

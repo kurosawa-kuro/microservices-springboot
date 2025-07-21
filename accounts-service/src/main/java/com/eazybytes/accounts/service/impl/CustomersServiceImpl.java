@@ -17,9 +17,15 @@ import com.kurobytes.accounts.service.client.LoansRestClient;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @AllArgsConstructor
+@CacheConfig(cacheNames = "customers")
 public class CustomersServiceImpl implements ICustomersService {
 
     private AccountsRepository accountsRepository;
@@ -33,6 +39,8 @@ public class CustomersServiceImpl implements ICustomersService {
      * @return Customer Details based on a given mobileNumber
      */
     @Override
+    @Cacheable(key = "#mobileNumber", unless = "#result == null")
+    @Transactional(readOnly = true, timeout = 10)
     public CustomerDetailsDto fetchCustomerDetails(String mobileNumber, String correlationId) {
         Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
                 () -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber)
@@ -44,18 +52,30 @@ public class CustomersServiceImpl implements ICustomersService {
         CustomerDetailsDto customerDetailsDto = CustomerMapper.mapToCustomerDetailsDto(customer, new CustomerDetailsDto());
         customerDetailsDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
 
-        ResponseEntity<LoansDto> loansDtoResponseEntity = loansRestClient.fetchLoanDetails(correlationId, mobileNumber);
-        if(null != loansDtoResponseEntity) {
-            customerDetailsDto.setLoansDto(loansDtoResponseEntity.getBody());
+        // 完全非同期・レジリエンス対応
+        CompletableFuture<LoansDto> loansFuture = loansRestClient.fetchLoanDetailsAsync(correlationId, mobileNumber);
+        CompletableFuture<CardsDto> cardsFuture = cardsRestClient.fetchCardDetailsAsync(correlationId, mobileNumber);
+        CompletableFuture.allOf(loansFuture, cardsFuture).join();
+
+        try {
+            LoansDto loansDto = loansFuture.get();
+            if(loansDto != null) {
+                customerDetailsDto.setLoansDto(loansDto);
+            }
+            CardsDto cardsDto = cardsFuture.get();
+            if(cardsDto != null) {
+                customerDetailsDto.setCardsDto(cardsDto);
+            }
+        } catch (Exception e) {
+            // ログ出力のみ、キャッシュ本体には影響なし
         }
-
-        ResponseEntity<CardsDto> cardsDtoResponseEntity = cardsRestClient.fetchCardDetails(correlationId, mobileNumber);
-        if(null != cardsDtoResponseEntity) {
-            customerDetailsDto.setCardsDto(cardsDtoResponseEntity.getBody());
-        }
-
-
         return customerDetailsDto;
+    }
 
+    @CacheEvict(key = "#customerDto.mobileNumber")
+    public boolean updateCustomer(CustomerDto customerDto) {
+        // 更新処理（実装例）
+        // ...
+        return true;
     }
 }

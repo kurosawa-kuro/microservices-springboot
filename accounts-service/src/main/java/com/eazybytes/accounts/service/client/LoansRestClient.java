@@ -14,6 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import org.springframework.scheduling.annotation.Async;
+import java.util.concurrent.CompletableFuture;
+import org.springframework.web.client.ResourceAccessException;
 
 @Component
 public class LoansRestClient {
@@ -53,4 +58,22 @@ public class LoansRestClient {
         }
     }
 
+    @Async("taskExecutor")
+    @Retry(name = "loans-service", maxAttempts = 3)
+    @CircuitBreaker(name = "loans-service", fallbackMethod = "getDefaultLoansData")
+    public CompletableFuture<LoansDto> fetchLoanDetailsAsync(String correlationId, String mobileNumber) {
+        try {
+            ResponseEntity<LoansDto> response = fetchLoanDetails(correlationId, mobileNumber);
+            return CompletableFuture.completedFuture(response.getBody());
+        } catch (Exception e) {
+            log.warn("Failed to fetch loans for mobile: {}", mobileNumber, e);
+            return CompletableFuture.completedFuture(null);
+        }
+    }
+
+    public CompletableFuture<LoansDto> getDefaultLoansData(String correlationId, String mobileNumber, Throwable ex) {
+        log.warn("Circuit breaker activated for loans service: {}", ex.getMessage());
+        LoansDto defaultLoans = new LoansDto(); // 必要に応じてデフォルト値をセット
+        return CompletableFuture.completedFuture(defaultLoans);
+    }
 }
