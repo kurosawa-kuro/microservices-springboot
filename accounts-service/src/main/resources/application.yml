@@ -5,6 +5,9 @@ spring:
     name: "accounts"
   profiles:
     active: "prod"
+  config:
+    activate:
+      on-profile: dev
   datasource:
     url: jdbc:sqlite:/data/app.db
     driverClassName: org.sqlite.JDBC
@@ -14,7 +17,7 @@ spring:
     database-platform: com.kurobytes.common.dialect.SQLiteDialect
     hibernate:
       ddl-auto: update
-    show-sql: false # SECURITY: Disable SQL logging in production
+    show-sql: true
 management:
   endpoints:
     web:

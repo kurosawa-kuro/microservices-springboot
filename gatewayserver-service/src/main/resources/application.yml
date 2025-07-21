@@ -27,10 +27,12 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: "health,info"
   endpoint:
     gateway:
       access: unrestricted
+    shutdown:
+      enabled: false
   info:
     env:
       enabled: true

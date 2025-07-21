@@ -1,10 +1,15 @@
-server:
-  port: 8090
+# 共通設定
 spring:
   application:
     name: "loans"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
   profiles:
-    active: "prod"
+    active: "dev"
   datasource:
     url: jdbc:sqlite:/data/app.db
     driverClassName: org.sqlite.JDBC
@@ -12,32 +17,16 @@ spring:
     password: ''
   jpa:
     database-platform: com.kurobytes.common.dialect.SQLiteDialect
-
----
-spring:
-  config:
-    activate:
-      on-profile: dev
-  jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-
----
-spring:
-  config:
-    activate:
-      on-profile: prod
-  jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: false
-
+server:
+  port: 8090
 management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: "health,info"
   health:
     readiness-state:
       enabled: true
@@ -45,7 +34,7 @@ management:
       enabled: true
   endpoint:
     shutdown:
-      access: unrestricted
+      enabled: false
     health:
       probes:
         enabled: true
@@ -55,14 +44,65 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
-
-
 info:
   app:
     name: "loans"
     description: "Kuro Bank Loans Application"
     version: "1.0.0"
+logging:
+  level:
+    com:
+      kurobytes:
+        loans: DEBUG
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
 
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  profiles:
+    active: "prod"
+  datasource:
+    url: jdbc:sqlite:/data/app.db
+    driverClassName: org.sqlite.JDBC
+    username: ''
+    password: ''
+  jpa:
+    database-platform: com.kurobytes.common.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+server:
+  port: 8090
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    shutdown:
+      enabled: false
+    health:
+      probes:
+        enabled: true
+  info:
+    env:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+info:
+  app:
+    name: "loans"
+    description: "Kuro Bank Loans Application"
+    version: "1.0.0"
 logging:
   level:
     com:

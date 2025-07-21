@@ -5,6 +5,9 @@ spring:
     name: "cards"
   profiles:
     active: "prod"
+  config:
+    activate:
+      on-profile: dev
   datasource:
     url: jdbc:sqlite:/data/app.db
     driverClassName: org.sqlite.JDBC
@@ -16,11 +19,21 @@ spring:
       ddl-auto: update
     show-sql: true
 
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+
 management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: "health,info"
   health:
     readiness-state:
       enabled: true
@@ -28,7 +41,7 @@ management:
       enabled: true
   endpoint:
     shutdown:
-      access: unrestricted
+      enabled: false
     health:
       probes:
         enabled: true
