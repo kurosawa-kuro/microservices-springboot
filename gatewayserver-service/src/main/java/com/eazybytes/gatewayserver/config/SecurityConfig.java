@@ -20,10 +20,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
-        serverHttpSecurity.authorizeExchange(exchanges -> exchanges.pathMatchers(HttpMethod.GET).permitAll()
+        serverHttpSecurity.authorizeExchange(exchanges -> exchanges
+                .pathMatchers("/public/**").permitAll() // 公開APIのみ
+                .pathMatchers(HttpMethod.GET, "/api/health").permitAll() // ヘルスチェックのみ
                 .pathMatchers("/kurobank/accounts/**").hasRole("ACCOUNTS")
                 .pathMatchers("/kurobank/cards/**").hasRole("CARDS")
-                .pathMatchers("/kurobank/loans/**").hasRole("LOANS"))
+                .pathMatchers("/kurobank/loans/**").hasRole("LOANS")
+                .anyExchange().authenticated()) // その他は認証必須
                 .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec
                         .jwt(jwtSpec -> jwtSpec.jwtAuthenticationConverter(grantedAuthoritiesExtractor())));
         serverHttpSecurity.csrf(csrfSpec -> csrfSpec.disable());

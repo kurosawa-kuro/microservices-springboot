@@ -12,9 +12,26 @@ spring:
     password: ''
   jpa:
     database-platform: com.eazybytes.common.dialect.SQLiteDialect
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
 
 management:
   endpoints:
