@@ -3,8 +3,10 @@ server:
 spring:
   application:
     name: "accounts"
-  profiles:
-    active: "prod"
+# 共通設定ここまで
+
+---
+spring:
   config:
     activate:
       on-profile: dev
@@ -16,8 +18,27 @@ spring:
   jpa:
     database-platform: com.kurobytes.common.dialect.SQLiteDialect
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: validate
+    show-sql: false
+# dev固有設定ここまで
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:sqlite:/data/app.db
+    driverClassName: org.sqlite.JDBC
+    username: ''
+    password: ''
+  jpa:
+    database-platform: com.kurobytes.common.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+# prod固有設定ここまで
+
 management:
   endpoints:
     web:

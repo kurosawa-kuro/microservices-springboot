@@ -30,7 +30,7 @@ management:
         include: "health,info"
   endpoint:
     gateway:
-      access: unrestricted
+      enabled: false
     shutdown:
       enabled: false
   info:
