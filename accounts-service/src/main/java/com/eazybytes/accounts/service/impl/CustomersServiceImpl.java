@@ -13,7 +13,7 @@ import com.kurobytes.accounts.repository.AccountsRepository;
 import com.kurobytes.accounts.repository.CustomerRepository;
 import com.kurobytes.accounts.service.ICustomersService;
 import com.kurobytes.accounts.service.client.CardsRestClient;
-import com.kurobytes.accounts.service.client.LoansFeignClient;
+import com.kurobytes.accounts.service.client.LoansRestClient;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class CustomersServiceImpl implements ICustomersService {
     private AccountsRepository accountsRepository;
     private CustomerRepository customerRepository;
     private CardsRestClient cardsRestClient;
-    private LoansFeignClient loansFeignClient;
+    private LoansRestClient loansRestClient;
 
     /**
      * @param mobileNumber - Input Mobile Number
@@ -44,7 +44,7 @@ public class CustomersServiceImpl implements ICustomersService {
         CustomerDetailsDto customerDetailsDto = CustomerMapper.mapToCustomerDetailsDto(customer, new CustomerDetailsDto());
         customerDetailsDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
 
-        ResponseEntity<LoansDto> loansDtoResponseEntity = loansFeignClient.fetchLoanDetails(correlationId, mobileNumber);
+        ResponseEntity<LoansDto> loansDtoResponseEntity = loansRestClient.fetchLoanDetails(correlationId, mobileNumber);
         if(null != loansDtoResponseEntity) {
             customerDetailsDto.setLoansDto(loansDtoResponseEntity.getBody());
         }

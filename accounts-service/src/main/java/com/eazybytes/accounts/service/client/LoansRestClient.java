@@ -16,16 +16,16 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
-public class LoansFeignClient {
+public class LoansRestClient {
 
-    private static final Logger log = LoggerFactory.getLogger(LoansFeignClient.class);
+    private static final Logger log = LoggerFactory.getLogger(LoansRestClient.class);
 
     private final RestTemplate restTemplate;
     
     @Value("${microservices.loans.url:http://loans:8090}")
     private String loansServiceUrl;
 
-    public LoansFeignClient(RestTemplate restTemplate) {
+    public LoansRestClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 

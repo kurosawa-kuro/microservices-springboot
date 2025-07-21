@@ -18,3 +18,18 @@ spring:
         binder:
           brokers:
             - localhost:9092
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
+  endpoint:
+    shutdown:
+      enabled: false
+  info:
+    env:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
